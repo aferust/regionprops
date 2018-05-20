@@ -11,7 +11,7 @@ Region getRInstance(
     Region r = regionProps.getRegion();
     return r;
 }
-
+/*
 std::vector<double> scalarToVector(cv::Scalar s){
     std::vector<double> v;
     for(int i = 0; i < 4; i++){
@@ -19,3 +19,4 @@ std::vector<double> scalarToVector(cv::Scalar s){
     }
     return v;
 }
+*/

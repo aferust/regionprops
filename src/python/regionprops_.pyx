@@ -49,6 +49,7 @@ cdef extern from "opencv2/core.hpp" namespace "cv":
         Scalar(double) except +
         Scalar(double, double, double) except +
         Scalar(double, double, double, double) except +
+        double val[4]
         
     cdef cppclass Vec4i "cv::Vec<int, 4>": 
         Vec4i() except +
@@ -110,7 +111,7 @@ cdef extern from "../region.h":
 
 cdef extern from "mwrap.h":
     Region getRInstance(const vector[Point] &_contour, const Mat &_img)
-    vector[double] scalarToVector(Scalar s);
+    #vector[double] scalarToVector(Scalar s);
 
 cdef np.ndarray[np.float_t, ndim=2, mode="c"] vp2np(vector[Point] p):
     cdef int i
@@ -153,12 +154,13 @@ cpdef regionprops(
     regions = []
 
     cdef np.ndarray[np.float_t, ndim=2, mode="c"] filledImage
-
+    
     for j in range(contoursv.size()):
         m_dict = {}
 
         _region = getRInstance(contoursv[j], cgray)
         filledImage = mat2np(_region.FilledImage())
+
         m_dict = {
             "Area": _region.Area(),
             "Perimeter": _region.Perimeter(),
@@ -199,7 +201,7 @@ cpdef regionprops(
             "MinVal": _region.MinVal(),
             "MaxLoc": {"x": _region.MaxLoc().x, "y": _region.MaxLoc().y },
             "MinLoc": {"x": _region.MinLoc().x, "y": _region.MinLoc().y },
-            "MeanVal": scalarToVector(_region.MeanVal()), # not sure if it is the best implementation
+            "MeanVal": _region.MeanVal().val,
             "Extrema": vp2np(_region.Extrema()),
             "Solidity": _region.Solidity()
         }
