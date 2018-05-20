@@ -110,6 +110,8 @@ cdef extern from "../region.h":
         double Solidity()
 
 cdef extern from "mwrap.h":
+    # RegionProps class has no nullary constructor and compute() is a private member function
+    # And this is only possible wrapping method without modifying original source
     Region getRInstance(const vector[Point] &_contour, const Mat &_img)
     #vector[double] scalarToVector(Scalar s);
 
