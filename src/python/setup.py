@@ -32,7 +32,7 @@ setup(
             "regionprops",
             ["regionprops_.pyx", "../regionprops.cpp", "mwrap.cpp"],
             language="c++",
-            extra_compile_args=["-std=c++11", "-O2", "-O3", "/EHsc"],
+            extra_compile_args=["-std=c++11", "-O2", "-O3"],
             extra_link_args=["-std=c++11"],
             include_dirs=[numpy.get_include(), opencv_include_dir],
             libraries=opencv_libs,
